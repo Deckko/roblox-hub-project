@@ -21,16 +21,16 @@
                 <a href="#"><i class="fas fa-shopping-cart"></i> Giỏ Hàng</a>
                 <a href="#"><i class="fas fa-address-book"></i> Liên Hệ</a>
             </nav>
-            <div class="user-actions">
-                <button class="btn btn-login"><i class="fas fa-sign-in-alt"></i> Đăng Nhập</button>
-                <button class="btn btn-register"><i class="fas fa-user-plus"></i> Đăng Ký</button>
+            <div class="user-actions" id="userActions"> 
+                <button class="btn btn-login" onclick="openModal('loginModal')"><i class="fas fa-sign-in-alt"></i> Đăng Nhập</button>
+                <button class="btn btn-register" onclick="openModal('registerModal')"><i class="fas fa-user-plus"></i> Đăng Ký</button>
             </div>
         </div>
     </header>
 
     <main class="container">
         <section class="announcement">
-            <p><i class="fas fa-bell"></i> Chào mừng đến với ichvu5s, nơi cung cấp dịch vụ cày thuê và Gamepass các Envent Liên Quân uy tín!</p>
+            <p><i class="fas fa-bell"></i> Chào mừng đến với ichvu5s, nơi cung cấp dịch vụ cày thuê và Gamepass các Event Liên Quân uy tín!</p>
         </section>
 
         <section class="user-info-bar">
@@ -38,7 +38,7 @@
                 <i class="fas fa-wallet"></i> Số dư: <span id="userBalance">0 Đ</span>
             </div>
             <div class="deposit">
-                <a href="#" class="btn btn-deposit"><i class="fas fa-plus-circle"></i> Nạp tiền ngay</a>
+                <a href="#" class="btn btn-deposit" onclick="openPayment()"><i class="fas fa-plus-circle"></i> Nạp tiền ngay</a>
             </div>
         </section>
 
@@ -73,50 +73,59 @@
                     <p class="price">Giá: <span>75.000 Đ</span></p>
                     <button class="btn btn-buy">Mua Ngay</button>
                 </div>
-                </div>
+            </div>
         </section>
     </main>
+    
     <div id="loginModal" class="modal">
-    <div class="modal-content">
-        <span class="close-btn" onclick="closeModal('loginModal')">&times;</span>
-        <h2>Đăng Nhập</h2>
-        <form id="loginForm">
-            <label for="loginUsername">Tên đăng nhập</label>
-            <input type="text" id="loginUsername" required>
-
-            <label for="loginPassword">Mật khẩu</label>
-            <input type="password" id="loginPassword" required>
-
-            <button type="submit" class="btn btn-login-modal">Đăng Nhập</button>
-            <p class="modal-switch">Chưa có tài khoản? <a href="#" onclick="showRegister()">Đăng ký ngay</a></p>
-            <p id="loginMessage" class="form-message"></p>
-        </form>
+        <div class="modal-content">
+            <span class="close-btn" onclick="closeModal('loginModal')">&times;</span>
+            
+            <div class="modal-header-image">
+                <i class="fas fa-user-circle"></i>
+                <h3>ĐĂNG NHẬP TÀI KHOẢN</h3>
+            </div>
+            
+            <button class="btn btn-facebook"><i class="fab fa-facebook-f"></i> ĐĂNG NHẬP BẰNG FACEBOOK</button>
+            
+            <form id="loginForm">
+                <div class="input-group">
+                    <i class="fas fa-user icon"></i>
+                    <input type="text" id="loginUsername" placeholder="Tài Khoản / Email *" required>
+                </div>
+                <div class="input-group">
+                    <i class="fas fa-lock icon"></i>
+                    <input type="password" id="loginPassword" placeholder="Mật khẩu *" required>
+                    <span class="forgot-pass" onclick="alert('Mô phỏng: Chuyển đến trang quên mật khẩu')">Quên mật khẩu</span> 
+                </div>
+                
+                <button type="submit" class="btn btn-login-modal">ĐĂNG NHẬP</button>
+                <button type="button" class="btn btn-create-account" onclick="showRegister()">TẠO TÀI KHOẢN</button>
+                <p id="loginMessage" class="form-message"></p>
+            </form>
+        </div>
     </div>
-</div>
 
-<div id="registerModal" class="modal">
-    <div class="modal-content">
-        <span class="close-btn" onclick="closeModal('registerModal')">&times;</span>
-        <h2>Đăng Ký Tài Khoản</h2>
-        <form id="registerForm">
-            <label for="regUsername">Tên đăng nhập</label>
-            <input type="text" id="regUsername" required>
+    <div id="registerModal" class="modal">
+        <div class="modal-content">
+            <span class="close-btn" onclick="closeModal('registerModal')">&times;</span>
+            <div class="modal-header-image">
+                <i class="fas fa-user-plus"></i>
+                <h3>ĐĂNG KÝ TÀI KHOẢN</h3>
+            </div>
+            
+            <form id="registerForm">
+                <div class="input-group"><input type="text" id="regUsername" placeholder="Tên đăng nhập *" required></div>
+                <div class="input-group"><input type="email" id="regEmail" placeholder="Email *" required></div>
+                <div class="input-group"><input type="password" id="regPassword" placeholder="Mật khẩu *" required></div>
+                <div class="input-group"><input type="password" id="regConfirmPassword" placeholder="Xác nhận mật khẩu *" required></div>
 
-            <label for="regEmail">Email</label>
-            <input type="email" id="regEmail" required>
-
-            <label for="regPassword">Mật khẩu</label>
-            <input type="password" id="regPassword" required>
-
-            <label for="regConfirmPassword">Xác nhận mật khẩu</label>
-            <input type="password" id="regConfirmPassword" required>
-
-            <button type="submit" class="btn btn-register-modal">Đăng Ký</button>
-            <p class="modal-switch">Đã có tài khoản? <a href="#" onclick="showLogin()">Đăng nhập</a></p>
-            <p id="registerMessage" class="form-message"></p>
-        </form>
+                <button type="submit" class="btn btn-register-modal">ĐĂNG KÝ</button>
+                <p class="modal-switch">Đã có tài khoản? <a href="#" onclick="showLogin()">Đăng nhập</a></p>
+                <p id="registerMessage" class="form-message"></p>
+            </form>
+        </div>
     </div>
-</div>
 
     <footer>
         <p>&copy; 2025 Roblox Shop Dichvu5s. Phát triển bởi Dekko.</p>
