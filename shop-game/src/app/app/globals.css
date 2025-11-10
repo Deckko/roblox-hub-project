@@ -1,0 +1,4 @@
+/* TRƯỚC: @tailwind base; @tailwind components; @tailwind utilities; */
+
+/* SAU: */
+@import "tailwindcss";
