@@ -76,6 +76,47 @@
                 </div>
         </section>
     </main>
+    <div id="loginModal" class="modal">
+    <div class="modal-content">
+        <span class="close-btn" onclick="closeModal('loginModal')">&times;</span>
+        <h2>Đăng Nhập</h2>
+        <form id="loginForm">
+            <label for="loginUsername">Tên đăng nhập</label>
+            <input type="text" id="loginUsername" required>
+
+            <label for="loginPassword">Mật khẩu</label>
+            <input type="password" id="loginPassword" required>
+
+            <button type="submit" class="btn btn-login-modal">Đăng Nhập</button>
+            <p class="modal-switch">Chưa có tài khoản? <a href="#" onclick="showRegister()">Đăng ký ngay</a></p>
+            <p id="loginMessage" class="form-message"></p>
+        </form>
+    </div>
+</div>
+
+<div id="registerModal" class="modal">
+    <div class="modal-content">
+        <span class="close-btn" onclick="closeModal('registerModal')">&times;</span>
+        <h2>Đăng Ký Tài Khoản</h2>
+        <form id="registerForm">
+            <label for="regUsername">Tên đăng nhập</label>
+            <input type="text" id="regUsername" required>
+
+            <label for="regEmail">Email</label>
+            <input type="email" id="regEmail" required>
+
+            <label for="regPassword">Mật khẩu</label>
+            <input type="password" id="regPassword" required>
+
+            <label for="regConfirmPassword">Xác nhận mật khẩu</label>
+            <input type="password" id="regConfirmPassword" required>
+
+            <button type="submit" class="btn btn-register-modal">Đăng Ký</button>
+            <p class="modal-switch">Đã có tài khoản? <a href="#" onclick="showLogin()">Đăng nhập</a></p>
+            <p id="registerMessage" class="form-message"></p>
+        </form>
+    </div>
+</div>
 
     <footer>
         <p>&copy; 2025 Roblox Shop Dichvu5s. Phát triển bởi Dekko.</p>
