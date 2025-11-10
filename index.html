@@ -1,0 +1,115 @@
+<!DOCTYPE html>
+<html lang="vi">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Roblox Hub - Dịch vụ Roblox & Sự kiện Liên Quân</title>
+
+<link href="https://fonts.googleapis.com/css2?family=Roboto:wght@400;700&display=swap" rel="stylesheet">
+
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/swiper@9/swiper-bundle.min.css"/>
+
+<link rel="stylesheet" href="style.css">
+
+</head>
+<body>
+
+<header>
+    <div class="logo"><h2>Roblox Hub</h2></div>
+    <div class="menu-toggle" onclick="toggleMenu()">
+        <span></span>
+        <span></span>
+        <span></span>
+    </div>
+    <nav id="mainNav">
+        <a href="#home" onclick="toggleMenu()">Trang chủ</a>
+        <a href="#about" onclick="toggleMenu()">Giới thiệu</a>
+        <a href="#services" onclick="toggleMenu()">Dịch vụ</a>
+        <a href="#gallery" onclick="toggleMenu()">Gallery</a>
+        <a href="#contact" onclick="toggleMenu()">Liên hệ</a>
+    </nav>
+</header>
+
+<section class="hero" id="home">
+    <h1>Chuyên Dịch Vụ Roblox & Sự kiện Liên Quân</h1>
+    <p>Tất cả trong một, nhanh chóng & uy tín</p>
+    <button style="margin-top: 20px;">Khám phá ngay</button>
+</section>
+
+<section class="section" id="about">
+    <h2>Giới thiệu</h2>
+    <p style="text-align:center;max-width:800px;margin:auto;">
+        Chúng tôi cung cấp các dịch vụ liên quan đến Roblox từ cày thuê, bán Gamepass, đến tổ chức sự kiện Liên Quân. Cam kết uy tín, chuyên nghiệp và trải nghiệm tốt nhất cho cộng đồng.
+    </p>
+</section>
+
+<section class="section" id="services">
+    <h2>Dịch vụ nổi bật</h2>
+    <div class="services">
+        <div class="card">
+            <h3>Cày thuê Roblox</h3>
+            <p>Nhanh chóng & an toàn</p>
+            <button>Mua ngay</button>
+        </div>
+        <div class="card">
+            <h3>Sell Gamepass</h3>
+            <p>RB120h, nhiều lựa chọn</p>
+            <button>Mua ngay</button>
+        </div>
+        <div class="card">
+            <h3>Sự kiện Liên Quân</h3>
+            <p>Tham gia chung sức cộng đồng</p>
+            <button>Tham gia</button>
+        </div>
+        <div class="card">
+            <h3>Nạp tiền trực tiếp</h3>
+            <p>Thẻ, Card, Bank</p>
+            <button onclick="openPayment()">Nạp ngay</button>
+        </div>
+    </div>
+</section>
+
+<section class="section" id="gallery">
+    <h2>Gallery / Video</h2>
+    <div class="swiper mySwiper">
+        <div class="swiper-wrapper">
+            <div class="swiper-slide"><img src="https://via.placeholder.com/300x150?text=Roblox+Cày+Thuê" alt="Roblox Cày Thuê"></div>
+            <div class="swiper-slide"><img src="https://via.placeholder.com/300x150?text=Gamepass+Giá+Rẻ" alt="Gamepass Giá Rẻ"></div>
+            <div class="swiper-slide"><img src="https://via.placeholder.com/300x150?text=Giải+Đấu+Liên+Quân" alt="Giải Đấu Liên Quân"></div>
+            <div class="swiper-slide"><img src="https://via.placeholder.com/300x150?text=Video+Review" alt="Video Review"></div>
+        </div>
+        <div class="swiper-pagination"></div>
+    </div>
+</section>
+
+<section class="section" id="contact">
+    <h2>Liên hệ</h2>
+    <form id="contactForm" onsubmit="handleFormSubmit(event)">
+        <input type="text" id="contactName" placeholder="Họ và tên" required>
+        <input type="email" id="contactEmail" placeholder="Email" required>
+        <textarea id="contactMessage" rows="5" placeholder="Nội dung" required></textarea>
+        <button type="submit">Gửi</button>
+    </form>
+    <div id="formMessage" style="text-align:center; margin-top:20px; font-weight:bold;"></div>
+</section>
+
+<footer>
+    <p>&copy; 2025 Roblox Hub. All Rights Reserved.</p>
+</footer>
+
+<div class="chat-box" id="chatBox">
+    <div class="chat-header" onclick="toggleChat()">Chat với chúng tôi</div>
+    <div class="chat-messages" id="chatMessages">
+        <p>Hệ thống: Xin chào! Chúng tôi có thể giúp gì cho bạn?</p>
+    </div>
+    <div class="chat-input">
+        <input type="text" id="chatInput" placeholder="Nhập tin nhắn..." onkeypress="if(event.key === 'Enter') sendMessage()">
+        <button onclick="sendMessage()">Gửi</button>
+    </div>
+</div>
+
+<script src="https://cdn.jsdelivr.net/npm/swiper@9/swiper-bundle.min.js"></script>
+<script src="script.js"></script>
+
+</body>
+</html>
