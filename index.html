@@ -1,115 +1,86 @@
 <!DOCTYPE html>
 <html lang="vi">
 <head>
-<meta charset="UTF-8">
-<meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>Roblox Hub - Dịch vụ Roblox & Sự kiện Liên Quân</title>
-
-<link href="https://fonts.googleapis.com/css2?family=Roboto:wght@400;700&display=swap" rel="stylesheet">
-
-<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/swiper@9/swiper-bundle.min.css"/>
-
-<link rel="stylesheet" href="style.css">
-
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Shop Roblox Mua Bán Dịch Vụ - Mô phỏng</title>
+    <link rel="stylesheet" href="style.css">
+    <link href="https://fonts.googleapis.com/css2?family=Roboto:wght@400;700;900&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
 </head>
 <body>
 
-<header>
-    <div class="logo"><h2>Roblox Hub</h2></div>
-    <div class="menu-toggle" onclick="toggleMenu()">
-        <span></span>
-        <span></span>
-        <span></span>
-    </div>
-    <nav id="mainNav">
-        <a href="#home" onclick="toggleMenu()">Trang chủ</a>
-        <a href="#about" onclick="toggleMenu()">Giới thiệu</a>
-        <a href="#services" onclick="toggleMenu()">Dịch vụ</a>
-        <a href="#gallery" onclick="toggleMenu()">Gallery</a>
-        <a href="#contact" onclick="toggleMenu()">Liên hệ</a>
-    </nav>
-</header>
-
-<section class="hero" id="home">
-    <h1>Chuyên Dịch Vụ Roblox & Sự kiện Liên Quân</h1>
-    <p>Tất cả trong một, nhanh chóng & uy tín</p>
-    <button style="margin-top: 20px;">Khám phá ngay</button>
-</section>
-
-<section class="section" id="about">
-    <h2>Giới thiệu</h2>
-    <p style="text-align:center;max-width:800px;margin:auto;">
-        Chúng tôi cung cấp các dịch vụ liên quan đến Roblox từ cày thuê, bán Gamepass, đến tổ chức sự kiện Liên Quân. Cam kết uy tín, chuyên nghiệp và trải nghiệm tốt nhất cho cộng đồng.
-    </p>
-</section>
-
-<section class="section" id="services">
-    <h2>Dịch vụ nổi bật</h2>
-    <div class="services">
-        <div class="card">
-            <h3>Cày thuê Roblox</h3>
-            <p>Nhanh chóng & an toàn</p>
-            <button>Mua ngay</button>
+    <header>
+        <div class="header-content">
+            <div class="logo">
+                <a href="#"><i class="fas fa-gem"></i> <span class="logo-text">ROBLOX SHOP</span></a>
+            </div>
+            <nav class="main-nav">
+                <a href="#"><i class="fas fa-home"></i> Trang Chủ</a>
+                <a href="#"><i class="fas fa-money-check-alt"></i> Nạp Thẻ</a>
+                <a href="#"><i class="fas fa-shopping-cart"></i> Giỏ Hàng</a>
+                <a href="#"><i class="fas fa-address-book"></i> Liên Hệ</a>
+            </nav>
+            <div class="user-actions">
+                <button class="btn btn-login"><i class="fas fa-sign-in-alt"></i> Đăng Nhập</button>
+                <button class="btn btn-register"><i class="fas fa-user-plus"></i> Đăng Ký</button>
+            </div>
         </div>
-        <div class="card">
-            <h3>Sell Gamepass</h3>
-            <p>RB120h, nhiều lựa chọn</p>
-            <button>Mua ngay</button>
-        </div>
-        <div class="card">
-            <h3>Sự kiện Liên Quân</h3>
-            <p>Tham gia chung sức cộng đồng</p>
-            <button>Tham gia</button>
-        </div>
-        <div class="card">
-            <h3>Nạp tiền trực tiếp</h3>
-            <p>Thẻ, Card, Bank</p>
-            <button onclick="openPayment()">Nạp ngay</button>
-        </div>
-    </div>
-</section>
+    </header>
 
-<section class="section" id="gallery">
-    <h2>Gallery / Video</h2>
-    <div class="swiper mySwiper">
-        <div class="swiper-wrapper">
-            <div class="swiper-slide"><img src="https://via.placeholder.com/300x150?text=Roblox+Cày+Thuê" alt="Roblox Cày Thuê"></div>
-            <div class="swiper-slide"><img src="https://via.placeholder.com/300x150?text=Gamepass+Giá+Rẻ" alt="Gamepass Giá Rẻ"></div>
-            <div class="swiper-slide"><img src="https://via.placeholder.com/300x150?text=Giải+Đấu+Liên+Quân" alt="Giải Đấu Liên Quân"></div>
-            <div class="swiper-slide"><img src="https://via.placeholder.com/300x150?text=Video+Review" alt="Video Review"></div>
-        </div>
-        <div class="swiper-pagination"></div>
-    </div>
-</section>
+    <main class="container">
+        <section class="announcement">
+            <p><i class="fas fa-bell"></i> Chào mừng đến với Roblox Shop, nơi cung cấp dịch vụ cày thuê và Gamepass uy tín!</p>
+        </section>
 
-<section class="section" id="contact">
-    <h2>Liên hệ</h2>
-    <form id="contactForm" onsubmit="handleFormSubmit(event)">
-        <input type="text" id="contactName" placeholder="Họ và tên" required>
-        <input type="email" id="contactEmail" placeholder="Email" required>
-        <textarea id="contactMessage" rows="5" placeholder="Nội dung" required></textarea>
-        <button type="submit">Gửi</button>
-    </form>
-    <div id="formMessage" style="text-align:center; margin-top:20px; font-weight:bold;"></div>
-</section>
+        <section class="user-info-bar">
+            <div class="balance">
+                <i class="fas fa-wallet"></i> Số dư: <span id="userBalance">0 Đ</span>
+            </div>
+            <div class="deposit">
+                <a href="#" class="btn btn-deposit"><i class="fas fa-plus-circle"></i> Nạp tiền ngay</a>
+            </div>
+        </section>
 
-<footer>
-    <p>&copy; 2025 Roblox Hub. All Rights Reserved.</p>
-</footer>
+        <section class="service-categories">
+            <h2>Dịch Vụ Nổi Bật</h2>
+            <div class="categories">
+                <a href="#" class="category-card"><i class="fas fa-gamepad"></i> Cày Thuê</a>
+                <a href="#" class="category-card"><i class="fas fa-store"></i> Gamepass</a>
+                <a href="#" class="category-card"><i class="fas fa-box-open"></i> Thẻ Robux</a>
+                <a href="#" class="category-card"><i class="fas fa-gift"></i> Vòng Quay</a>
+            </div>
+        </section>
 
-<div class="chat-box" id="chatBox">
-    <div class="chat-header" onclick="toggleChat()">Chat với chúng tôi</div>
-    <div class="chat-messages" id="chatMessages">
-        <p>Hệ thống: Xin chào! Chúng tôi có thể giúp gì cho bạn?</p>
-    </div>
-    <div class="chat-input">
-        <input type="text" id="chatInput" placeholder="Nhập tin nhắn..." onkeypress="if(event.key === 'Enter') sendMessage()">
-        <button onclick="sendMessage()">Gửi</button>
-    </div>
-</div>
+        <section class="product-list">
+            <h2>Sản Phẩm Mới Nhất</h2>
+            <div class="products">
+                <div class="product-card">
+                    <img src="https://picsum.photos/300/180?random=5" alt="Dịch vụ Cày Level 1-100">
+                    <h3>Cày Level Max</h3>
+                    <p class="price">Giá: <span>100.000 Đ</span></p>
+                    <button class="btn btn-buy">Mua Ngay</button>
+                </div>
+                <div class="product-card">
+                    <img src="https://picsum.photos/300/180?random=6" alt="Gamepass VIP">
+                    <h3>Gamepass VIP</h3>
+                    <p class="price">Giá: <span>50.000 Đ</span></p>
+                    <button class="btn btn-buy">Mua Ngay</button>
+                </div>
+                <div class="product-card">
+                    <img src="https://picsum.photos/300/180?random=7" alt="Cày Sự Kiện">
+                    <h3>Dịch Vụ Cày Sự Kiện</h3>
+                    <p class="price">Giá: <span>75.000 Đ</span></p>
+                    <button class="btn btn-buy">Mua Ngay</button>
+                </div>
+                </div>
+        </section>
+    </main>
 
-<script src="https://cdn.jsdelivr.net/npm/swiper@9/swiper-bundle.min.js"></script>
-<script src="script.js"></script>
+    <footer>
+        <p>&copy; 2025 Roblox Shop Clone. Phát triển bởi AI.</p>
+    </footer>
 
+    <script src="script.js"></script>
 </body>
 </html>
