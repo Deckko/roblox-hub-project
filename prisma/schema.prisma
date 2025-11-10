@@ -1,0 +1,37 @@
+datasource db {
+  provider = "sqlite" // hoặc mysql/postgres
+  url      = "file:./dev.db"
+}
+
+generator client {
+  provider = "prisma-client-js"
+}
+
+model User {
+  id         Int      @id @default(autoincrement())
+  username   String   @unique
+  name       String?
+  email      String?  @unique
+  password   String
+  balance    Int      @default(0) // tiền dạng integer (VD: đơn vị nhỏ nhất)
+  isAdmin    Boolean  @default(false)
+  banned     Boolean  @default(false)
+  bannedReason String?
+  createdAt  DateTime @default(now())
+}
+
+model BannedIp {
+  id        Int      @id @default(autoincrement())
+  ip        String   @unique
+  reason    String?
+  createdAt DateTime @default(now())
+}
+model AdminLog {
+  id        Int      @id @default(autoincrement())
+  adminId   Int
+  action    String
+  target    String?
+  amount    Int?
+  note      String?
+  createdAt DateTime @default(now())
+}
