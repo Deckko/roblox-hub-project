@@ -3,10 +3,12 @@
 import { useState } from "react";
 import { experimental_useFormStatus as useFormStatus } from "react-dom";
 
-async function registerAction(formData: FormData) {
+async function loginAction(formData: FormData) {
 	"use server";
 	const bcrypt = await import("bcryptjs");
-	const prisma = (await import("@/lib/prisma")).default;
+	const prisma = (await import("../../../lib/prisma")).default;
+	const { cookies } = await import("next/headers");
+
 	const username = String(formData.get("username") || "").trim();
 	const password = String(formData.get("password") || "");
 
@@ -14,17 +16,20 @@ async function registerAction(formData: FormData) {
 		return { success: false, message: "Vui lòng nhập đầy đủ thông tin." };
 	}
 
-	const existing = await prisma.user.findUnique({ where: { username } });
-	if (existing) {
-		return { success: false, message: "Tên đăng nhập đã tồn tại." };
+	const user = await prisma.user.findUnique({ where: { username } });
+	if (!user) {
+		return { success: false, message: "Sai tài khoản hoặc mật khẩu." };
+	}
+	const ok = await bcrypt.compare(password, user.password);
+	if (!ok) {
+		return { success: false, message: "Sai tài khoản hoặc mật khẩu." };
 	}
 
-	const hashed = await bcrypt.hash(password, 10);
-	await prisma.user.create({
-		data: { username, password: hashed, balance: 0 },
-	});
+	// Placeholder session/cookie. For production, integrate a proper auth solution like NextAuth.js.
+	const cookieStore = await cookies();
+	cookieStore.set("session_user", user.username, { httpOnly: true, sameSite: "lax", path: "/" });
 
-	return { success: true, message: "Đăng ký thành công. Hãy đăng nhập." };
+	return { success: true, message: "Đăng nhập thành công." };
 }
 
 function SubmitButton({ children }: { children: React.ReactNode }) {
@@ -40,18 +45,21 @@ function SubmitButton({ children }: { children: React.ReactNode }) {
 	);
 }
 
-export default function RegisterPage() {
+export default function LoginPage() {
 	const [result, setResult] = useState<{ success: boolean; message: string } | null>(null);
 
 	return (
 		<div className="min-h-screen flex items-center justify-center bg-gray-100 p-4">
 			<div className="w-full max-w-md bg-white rounded-xl shadow-md p-6">
-				<h1 className="text-2xl font-extrabold text-center mb-1">Tạo tài khoản</h1>
-				<p className="text-center text-gray-500 mb-6">Đăng ký nhanh chóng để bắt đầu mua sắm</p>
+				<h1 className="text-2xl font-extrabold text-center mb-1">Đăng nhập</h1>
+				<p className="text-center text-gray-500 mb-6">Chào mừng bạn quay trở lại</p>
 				<form
 					action={async (formData) => {
-						const res = await registerAction(formData);
+						const res = await loginAction(formData);
 						setResult(res);
+						if (res.success && typeof window !== "undefined") {
+							window.location.href = "/app";
+						}
 					}}
 					className="space-y-4"
 				>
@@ -62,7 +70,7 @@ export default function RegisterPage() {
 							autoComplete="username"
 							required
 							className="w-full border rounded-md px-3 py-2 focus:outline-none focus:ring-2 focus:ring-red-500"
-							placeholder="nhap_ten_cua_ban"
+							placeholder="ten_dang_nhap"
 						/>
 					</div>
 					<div className="space-y-2">
@@ -70,13 +78,13 @@ export default function RegisterPage() {
 						<input
 							type="password"
 							name="password"
-							autoComplete="new-password"
+							autoComplete="current-password"
 							required
 							className="w-full border rounded-md px-3 py-2 focus:outline-none focus:ring-2 focus:ring-red-500"
 							placeholder="••••••••"
 						/>
 					</div>
-					<SubmitButton>Đăng ký</SubmitButton>
+					<SubmitButton>Đăng nhập</SubmitButton>
 				</form>
 				{result && (
 					<div
@@ -88,9 +96,9 @@ export default function RegisterPage() {
 					</div>
 				)}
 				<p className="text-center text-sm mt-6">
-					Đã có tài khoản?{" "}
-					<a href="/app/dang-nhap" className="text-red-600 font-semibold hover:underline">
-						Đăng nhập
+					Chưa có tài khoản?{" "}
+					<a href="/app/dang-ky" className="text-red-600 font-semibold hover:underline">
+						Đăng ký
 					</a>
 				</p>
 			</div>

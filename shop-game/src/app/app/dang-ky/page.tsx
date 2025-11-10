@@ -3,12 +3,10 @@
 import { useState } from "react";
 import { experimental_useFormStatus as useFormStatus } from "react-dom";
 
-async function loginAction(formData: FormData) {
+async function registerAction(formData: FormData) {
 	"use server";
 	const bcrypt = await import("bcryptjs");
-	const prisma = (await import("@/lib/prisma")).default;
-	const { cookies } = await import("next/headers");
-
+	const prisma = (await import("../../../lib/prisma")).default;
 	const username = String(formData.get("username") || "").trim();
 	const password = String(formData.get("password") || "");
 
@@ -16,20 +14,17 @@ async function loginAction(formData: FormData) {
 		return { success: false, message: "Vui lòng nhập đầy đủ thông tin." };
 	}
 
-	const user = await prisma.user.findUnique({ where: { username } });
-	if (!user) {
-		return { success: false, message: "Sai tài khoản hoặc mật khẩu." };
-	}
-	const ok = await bcrypt.compare(password, user.password);
-	if (!ok) {
-		return { success: false, message: "Sai tài khoản hoặc mật khẩu." };
+	const existing = await prisma.user.findUnique({ where: { username } });
+	if (existing) {
+		return { success: false, message: "Tên đăng nhập đã tồn tại." };
 	}
 
-	// Placeholder session/cookie. For production, integrate a proper auth solution like NextAuth.js.
-	const cookieStore = await cookies();
-	cookieStore.set("session_user", user.username, { httpOnly: true, sameSite: "lax", path: "/" });
+	const hashed = await bcrypt.hash(password, 10);
+	await prisma.user.create({
+		data: { username, password: hashed, balance: 0 },
+	});
 
-	return { success: true, message: "Đăng nhập thành công." };
+	return { success: true, message: "Đăng ký thành công. Hãy đăng nhập." };
 }
 
 function SubmitButton({ children }: { children: React.ReactNode }) {
@@ -45,21 +40,18 @@ function SubmitButton({ children }: { children: React.ReactNode }) {
 	);
 }
 
-export default function LoginPage() {
+export default function RegisterPage() {
 	const [result, setResult] = useState<{ success: boolean; message: string } | null>(null);
 
 	return (
 		<div className="min-h-screen flex items-center justify-center bg-gray-100 p-4">
 			<div className="w-full max-w-md bg-white rounded-xl shadow-md p-6">
-				<h1 className="text-2xl font-extrabold text-center mb-1">Đăng nhập</h1>
-				<p className="text-center text-gray-500 mb-6">Chào mừng bạn quay trở lại</p>
+				<h1 className="text-2xl font-extrabold text-center mb-1">Tạo tài khoản</h1>
+				<p className="text-center text-gray-500 mb-6">Đăng ký nhanh chóng để bắt đầu mua sắm</p>
 				<form
 					action={async (formData) => {
-						const res = await loginAction(formData);
+						const res = await registerAction(formData);
 						setResult(res);
-						if (res.success && typeof window !== "undefined") {
-							window.location.href = "/app";
-						}
 					}}
 					className="space-y-4"
 				>
@@ -70,7 +62,7 @@ export default function LoginPage() {
 							autoComplete="username"
 							required
 							className="w-full border rounded-md px-3 py-2 focus:outline-none focus:ring-2 focus:ring-red-500"
-							placeholder="ten_dang_nhap"
+							placeholder="nhap_ten_cua_ban"
 						/>
 					</div>
 					<div className="space-y-2">
@@ -78,13 +70,13 @@ export default function LoginPage() {
 						<input
 							type="password"
 							name="password"
-							autoComplete="current-password"
+							autoComplete="new-password"
 							required
 							className="w-full border rounded-md px-3 py-2 focus:outline-none focus:ring-2 focus:ring-red-500"
 							placeholder="••••••••"
 						/>
 					</div>
-					<SubmitButton>Đăng nhập</SubmitButton>
+					<SubmitButton>Đăng ký</SubmitButton>
 				</form>
 				{result && (
 					<div
@@ -96,9 +88,9 @@ export default function LoginPage() {
 					</div>
 				)}
 				<p className="text-center text-sm mt-6">
-					Chưa có tài khoản?{" "}
-					<a href="/app/dang-ky" className="text-red-600 font-semibold hover:underline">
-						Đăng ký
+					Đã có tài khoản?{" "}
+					<a href="/app/dang-nhap" className="text-red-600 font-semibold hover:underline">
+						Đăng nhập
 					</a>
 				</p>
 			</div>
